@@ -24,3 +24,29 @@
         session.getTransaction().commit();
 
         session.close();
+
+
+         UserDto dto = new UserDtoImpl();
+
+                dto.createSomeUsers(10);
+                System.out.println(dto.deleteUser(dto.getById(3L)));
+
+               dto.printUsers(dto.getAllUsers());
+
+                UserDto dto = new UserDtoImpl();
+
+                       dto.createSomeUsers(10);
+                     //  System.out.println(dto.deleteUser(dto.getById(3L)));
+                       User user = dto.getById(5L);
+                       user.setFirst_name("gggggggggggggggg");
+                       dto.updateUser(user);
+
+                      dto.printUsers(dto.getAllUsers());
+
+                        <annotationProcessorPaths>
+                                  <path>
+                                      <groupId>org.projectlombok</groupId>
+                                      <artifactId>lombok</artifactId>
+                                      <version>1.18.32</version>
+                                  </path>
+                              </annotationProcessorPaths>

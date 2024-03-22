@@ -1,9 +1,10 @@
-package org.hibernate_test.dto;
+package org.hibernate_test.data.dto;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.hibernate_test.data.HibernateUtil;
+import org.hibernate_test.data.storage.HibernateUtil;
+import org.hibernate_test.data.entities.Address;
 import org.hibernate_test.data.entities.User;
 
 import java.util.Date;
@@ -55,5 +56,32 @@ public class UserDtoImpl implements UserDto {
         }
     }
 
+    @Override
+    public boolean deleteUser(User user) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.remove(user);
+            transaction.commit();
+            return true;
+        }
+    }
+    @Override
+    public User updateUser(User user) { // update by Employer
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tx1 = session.beginTransaction();
+            session.merge(user);
+            tx1.commit();
+            return user;
+        }
+    }
 
-}
+    @Override
+    public Address getByIdUserAddress(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Address.class, id);
+        }
+    }
+
+
+
+    }

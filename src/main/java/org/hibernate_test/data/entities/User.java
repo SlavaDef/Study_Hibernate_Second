@@ -1,11 +1,21 @@
 package org.hibernate_test.data.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+// Благодаря аннотации @Embedded во время сохранения объекта Hibernate поймет,
+// что поля класса UserAddress нужно обрабатывать как поля самого класса User.
 
 @Entity
+@Data
 @Table(name = "user")
 public class User implements Serializable {
     @Id
@@ -30,83 +40,20 @@ public class User implements Serializable {
     private Date createDate;
     @Column(name = "CREATED_BY", updatable = false)
     private String createdBy;
+    @Embedded
+    public Accaunts accaunts;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER) // orphanRemoval = true,
+    private List<Address> addressList = new ArrayList<>();
 
-    public Long getUserId() {
-        return userId;
-    }
+    // cascade = CascadeType.MERGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
-    public Date getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
-
-    public void setLastUpdatedDate(Date lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
-    }
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public User() {
     }
 
     public User(String first_name, String last_name) {
         this.first_name = first_name;
         this.last_name = last_name;
-    }
-
-    public User() {
-    }
-
-    public User(String first_name, String last_name, Date birthdate) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birthdate = birthdate;
     }
 
     public User(String first_name, String last_name, Date birthdate, Date lastUpdatedDate, String lastUpdatedBy, Date createDate, String createdBy) {
@@ -117,19 +64,5 @@ public class User implements Serializable {
         this.lastUpdatedBy = lastUpdatedBy;
         this.createDate = createDate;
         this.createdBy = createdBy;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", birthdate=" + birthdate +
-                ", lastUpdatedDate=" + lastUpdatedDate +
-                ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
-                ", createDate=" + createDate +
-                ", createdBy='" + createdBy + '\'' +
-                '}';
     }
 }

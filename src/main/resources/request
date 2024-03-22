@@ -1,0 +1,4 @@
+
+         address1.setUser(user);
+         user.getAddressList().add(address1);
+         dto.updateUser(user);
