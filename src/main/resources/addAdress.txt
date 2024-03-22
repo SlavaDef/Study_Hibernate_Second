@@ -1,0 +1,38 @@
+  UserDto dto = new UserDtoImpl();
+
+        dto.createSomeUsers(10);
+
+        AddressDto ad = new AddressDtoImpl();
+
+       User user = dto.getById(5L);
+
+        user.setFirst_name("gggggggggggggggg");
+        user.setLast_name("22");
+
+        Address address1 = new Address("8888","fddffdfd","dsdssd@com");
+        Address address2 = new Address("8888","fddffdfd","dsdssd@com");
+        ad.addAddress(address1);
+        ad.addAddress(address2);
+        user.setAccaunts(new Accaunts("first", "second"));
+        address2.setUser(user);
+        address1.setUser(user);
+        user.getAddressList().add(address1);
+        user.getAddressList().add(address2);
+         dto.updateUser(user);
+       //  System.out.println(dto.getByIdUserAddress(5L));
+
+
+         dto.printUsers(dto.getAllUsers());
+ ---------------------------------------------------------------------------------------------------------------------
+
+          User user1 = new User("Arni", "Svainstaiger");
+                 address3.setUser(user1);
+                 user1.getAddressList().add(address3);
+                 dto.updateUser(user1);
+
+
+                  User user2 = dto.getById(2L);
+                       address2.setUser(user2);
+                       user2.getAddressList().add(address2);
+                       dto.updateUser(user2);
+                         dto.printUsers(dto.getAllUsers());

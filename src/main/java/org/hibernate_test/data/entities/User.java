@@ -42,7 +42,7 @@ public class User implements Serializable {
     private String createdBy;
     @Embedded
     public Accaunts accaunts;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER) // orphanRemoval = true,
+    @OneToMany(mappedBy = "user", cascade ={CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER) // orphanRemoval = true,
     private List<Address> addressList = new ArrayList<>();
 
     // cascade = CascadeType.MERGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
